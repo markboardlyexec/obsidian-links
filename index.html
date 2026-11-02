@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Opening in Obsidian…</title>
+<style>
+  body { font-family: -apple-system, system-ui, sans-serif; display: grid; place-items: center; min-height: 100vh; margin: 0; background: #f7f7f5; color: #222; }
+  .box { text-align: center; padding: 2rem; }
+  a { display: inline-block; margin-top: 1rem; padding: .6rem 1.2rem; background: #7c3aed; color: #fff; border-radius: 8px; text-decoration: none; }
+  p.small { color: #777; font-size: .85rem; }
+</style>
+</head>
+<body>
+<div class="box">
+  <p>Opening your note in Obsidian…</p>
+  <a id="open" href="#">Open in Obsidian</a>
+  <p class="small" id="msg"></p>
+</div>
+<script>
+  // Default vault, so links only need ?file=...
+  var DEFAULT_VAULT = "Boardly Bookkeeping BOS";
+
+  var params = new URLSearchParams(window.location.search);
+  var vault = params.get("vault") || DEFAULT_VAULT;
+  var file = params.get("file");
+
+  if (!file) {
+    document.getElementById("msg").textContent = "No note specified. Add ?file=Folder/Note%20name to the link.";
+    document.getElementById("open").style.display = "none";
+  } else {
+    var target = "obsidian://open?vault=" + encodeURIComponent(vault) +
+                 "&file=" + encodeURIComponent(file);
+    document.getElementById("open").href = target;
+    window.location.replace(target);
+  }
+</script>
+</body>
+</html>
